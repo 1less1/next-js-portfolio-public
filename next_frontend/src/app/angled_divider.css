@@ -1,0 +1,51 @@
+/* Horizontal Edge Clips */
+
+/* Left image with fixed slant on the right edge */
+.clip-right-edge {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 13px) 100%, 0 100%) !important;
+}
+
+/* Right image with fixed slant on the left edge */
+.clip-left-edge {
+  clip-path: polygon(13px 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Combined class for clipping both sides */
+.clip-horizontal-edges {
+  clip-path: polygon(13px 0, 100% 0, calc(100% - 13px) 100%, 0 100%);
+}
+
+/* Vertical Edge Clips that slope up from left to right */
+
+.clip-top-edge {
+  clip-path: polygon(0 8px, 100% 0, 100% 100%, 0 100%);
+}
+
+.clip-bottom-edge {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8px), 0 100%);
+}
+
+.clip-vertical-edges {
+  clip-path: polygon(0 8px, 100% 0, 100% calc(100% - 8px), 0 100%);
+}
+
+
+/* Alternate Vertical Edge Clips that slope down from left to right */
+
+.clip-top-edge-alt {
+  clip-path: polygon(0 0, 100% 8px, 100% 100%, 0 100%);
+}
+
+.clip-bottom-edge-alt {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 8px));
+}
+
+.clip-vertical-edges-alt {
+  clip-path: polygon(0 0, 100% 8px, 100% 100%, 0 calc(100% - 8px));
+}
+
+/* Clips the Top and Bottom Edges at different angles: Top = Up from left to right, Bottom = Down from left to right */
+
+.clip-vertical-edges-alt {
+  clip-path: polygon(0 8px, 100% 0, 100% 100%, 0 calc(100% - 8px))
+}

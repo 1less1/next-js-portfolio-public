@@ -1,0 +1,55 @@
+services:
+  app:
+    container_name: next-js-portfolio-frontend
+    restart: unless-stopped # Restart the container unless it is explicitly stopped by the user. 
+    # This is useful for ensuring that containers are restarted after a system reboot or Docker daemon restart.
+    build:
+      context: ./next_frontend
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000' # Default next.js port
+    networks:
+      - internal
+
+  backend:
+    container_name: node-backend
+    restart: unless-stopped
+    build:
+      context: ./node_backend
+      dockerfile: Dockerfile
+    ports:
+      - '4000:4000' # Default node.js port
+    env_file: /node_backend/.env
+    networks:
+      - internal
+    depends_on:
+      - db
+
+  db: 
+    container_name: portfolio-database
+    image: mysql:latest
+    restart: unless-stopped
+    env_file: /node_backend/.env
+    environment:
+      MYSQL_DATABASE: ${DATABASE_NAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+      MYSQL_USER: ${DATABASE_USER}
+    healthcheck:
+      # Every 20 seconds a test command will run to ping the localhost to make sure the database is listening and alive (happens 10 times!)
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$DATABASE_ROOT_PASSWORD" ]
+      timeout: 20s
+      retries: 10
+    ports:
+      - "3306:3306" # Default mysql port
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - internal
+
+volumes:
+  dbdata:
+
+networks:
+  internal:
+    driver: bridge
