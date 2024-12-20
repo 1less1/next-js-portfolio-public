@@ -15,7 +15,7 @@ export const projectInfo = [
         image: "/images/projects/nextjs_project.png",
         title: "Next.js Portfolio",
         description: "Personal project utilizing React, Next, and Node to create my own website from scratch.",
-        githublink: "https://github.com/1less1/next-js-portfolio",
+        githublink: "https://github.com/1less1/next-js-portfolio-public",
     },
     {
         image: "/images/projects/baseball_game_db_project.png",
