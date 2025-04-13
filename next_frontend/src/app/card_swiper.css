@@ -1,0 +1,74 @@
+.card-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.card-swiper .swiper-slide {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* Add perspective for 3D effect */
+  border-radius: 8px; /* Add rounded corners */
+  overflow: hidden; /* Ensure content respects the border radius */
+}
+
+.card-swiper .swiper-slide .flip-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card-swiper .swiper-slide .flip-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-swiper .swiper-slide .flip-card-front,
+.card-swiper .swiper-slide .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.card-swiper .swiper-slide .flip-card-front {
+  background-size: cover;
+  background-position: center;
+}
+
+.card-swiper .swiper-slide .flip-card-back {
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-swiper .swiper-slide .flip-card-back .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  color: white;
+  text-align: center; /* Center the text horizontally */
+}
+
+.card-swiper .swiper-slide .flip-card-back .overlay-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.card-swiper .swiper-slide .flip-card-back .overlay-content h3,
+.card-swiper .swiper-slide .flip-card-back .overlay-content p {
+  margin: 0; /* Remove default margins */
+}

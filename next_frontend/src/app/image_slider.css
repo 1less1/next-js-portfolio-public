@@ -1,0 +1,25 @@
+.image-slider {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.image-slider .swiper-button-next,
+.image-slider .swiper-button-prev {
+  color: white !important; /* Arrow color */
+}
+
+.image-slider .swiper-button-next:hover,
+.image-slider .swiper-button-prev:hover {
+  color: white !important;
+  opacity: 40% !important;
+}
+
+.image-slider .swiper-pagination-bullet {
+  background-color: #94b6b7 !important;
+  width: 8px !important; /* Bullet size */
+  height: 8px !important;
+}
+
+.image-slider .swiper-pagination-bullet-active {
+  background-color: #89e8ec !important; /* Active bullet color */
+}

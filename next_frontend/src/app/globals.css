@@ -1,0 +1,114 @@
+/* src/app/styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --custom_blue: #94b6b7;
+  --custom_purple: #8b7fa2;  --custom_tan: #e2ddc6; 
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Nunito Sans 10pt', Arial, Helvetica, sans-serif; /* Set Nunito as the primary font */
+}
+
+@font-face {
+  font-family: 'Nunito Sans 10pt';
+  src: url('/fonts/NunitoSans10pt-Italic.woff2') format('woff2'),
+       url('/fonts/NunitoSans10pt-Italic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito Sans 10pt';
+  src: url('/fonts/NunitoSans10pt-Regular.woff2') format('woff2'),
+       url('/fonts/NunitoSans10pt-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'Nunito Sans 10pt';
+  src: url('/fonts/NunitoSans10pt-Bold.woff2') format('woff2'),
+       url('/fonts/NunitoSans10pt-Bold.woff') format('woff');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Timmana';
+  src: url('/fonts/Timmana.woff2') format('woff2'),
+       url('/fonts/Timmana.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bangers';
+  src: url('/fonts/bangers.woff2') format('woff2'),
+       url('/fonts/bangers.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/fonts/quicksand.woff2') format('woff2'),
+       url('/fonts/quicksand.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@keyframes slide-in-bounce {
+  0% {
+    transform: translateX(100%); /* Start from the right */
+  }
+  60% {
+    transform: translateX(0); /* Complete the slide-in over 2 seconds */
+  }
+  65% {
+    transform: translateX(-6px); /* Start the gentle bounce to the left */
+  }
+  75% {
+    transform: translateX(4px); /* Move slightly back to the right */
+  }
+  85% {
+    transform: translateX(-2px); /* Bounce a little more to the left */
+  }
+  95% {
+    transform: translateX(1px); /* Bounce back to the right */
+  }
+  100% {
+    transform: translateX(0); /* Settle in place */
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in-bounce 3.5s ease-out forwards; /* 2 seconds for slide, 1.5 seconds for bounce */
+}
+
+/* Ensure scrollbar is always visible */
+html {
+  min-height: 100%;  /* Ensure body takes full height of the screen */
+  overflow-y: scroll;  /* Always show vertical scrollbar */
+}

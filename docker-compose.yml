@@ -1,0 +1,94 @@
+services:
+  db:
+    container_name: portfolio-db
+    image: mysql:latest
+    restart: unless-stopped
+    env_file: .env
+    environment: 
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - dbdata:/var/lib/mysql          
+    networks:
+      - internal
+
+  frontend:
+    container_name: next-frontend
+    restart: unless-stopped # Restart the container unless it is explicitly stopped by the user. 
+    build:
+      context: ./next_frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    env_file: .env
+    ports:
+    # host_port:container_port
+      - "127.0.0.1:3000:3000"
+      # Bind the port only to localhost
+      # The backend container also has port 3000 open on the internal docker network  
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=3000"
+      - "traefik.http.middlewares.rate-limit.rateLimit.average=100"
+      - "traefik.http.middlewares.rate-limit.rateLimit.burst=50"
+      - "traefik.http.routers.frontend.middlewares=rate-limit"
+    networks:
+      - internal
+
+  backend:
+    container_name: node-backend
+    restart: unless-stopped
+    build:
+      context: ./node_backend
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    env_file: .env
+    ports:
+      - "127.0.0.1:3001:3001" 
+      # Bind the port only to localhost
+      # The backend container also has port 3001 open on the internal docker network
+    networks:
+      - internal
+
+  traefik:
+    image: traefik:latest
+    container_name: traefik-proxy
+    restart: unless-stopped
+    depends_on:
+      - frontend
+    env_file: .env
+    environment:
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    command:
+      - "--api.dashboard=true"
+      - "--api.insecure=true" # Remove for production
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.tlschallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "127.0.0.1:8080:8080" # localhost Traefik Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./letsencrypt:/letsencrypt
+    networks:
+      - internal
+
+
+volumes:
+  dbdata:
+
+networks:
+  internal:
+    name: app-network
+    driver: bridge

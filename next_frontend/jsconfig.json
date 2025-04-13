@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",  // Current working directory (root directory): next_frontend/*
+    "paths": {
+      "@/*": ["./src/app/*"],
+      "@components/*": ["./src/app/components/*"], // Route to components folder -> @components
+    }
+  }
+}

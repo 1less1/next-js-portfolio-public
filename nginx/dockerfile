@@ -1,0 +1,23 @@
+FROM nginx:latest
+
+# Install Certbot and cron for automatic renewal
+RUN apt-get update && apt-get install -y certbot python3-certbot-nginx cron
+
+WORKDIR /etc/nginx
+
+# Copy the Nginx configuration file (ensure this exists in your project)
+COPY nginx-prod.conf /etc/nginx/nginx.conf
+
+# Create a directory for Certbot challenge verification
+RUN mkdir -p /var/www/certbot
+
+# Expose HTTP & HTTPS ports
+EXPOSE 80 443
+
+# Copy the Let's Encrypt automation script
+COPY letsencrypt.sh /letsencrypt.sh
+RUN chmod +x /letsencrypt.sh
+
+# Start Nginx, run Certbot, and keep services running
+CMD ["/bin/bash", "-c", "/letsencrypt.sh && cron && nginx -g 'daemon off;'"]
+
