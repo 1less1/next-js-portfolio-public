@@ -1,6 +1,7 @@
 next_frontend/public/
 letsencrypt/acme.json
 
+
 # Logs
 logs
 *.log
